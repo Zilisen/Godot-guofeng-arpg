@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://0uogv1fbvhf"]
+
+[ext_resource type="Script" uid="uid://c6fogy4fuebn7" path="res://scripts/world/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="Script" uid="uid://co5kplbk4a3bw" path="res://scripts/core/screen_shake.gd" id="4_camera"]
+[ext_resource type="Script" uid="uid://n4ea4magvy1g" path="res://scripts/ui/debug_overlay.gd" id="5_debug"]
+[ext_resource type="Resource" path="res://resources/run_config.tres" id="6_run"]
+
+[node name="Main" type="Node2D" unique_id=1154126580]
+script = ExtResource("1_main")
+run_config = ExtResource("6_run")
+
+[node name="World" type="Node2D" parent="." unique_id=2056907568]
+
+[node name="RoomHost" type="Node2D" parent="World" unique_id=1571341142]
+
+[node name="Player" parent="World" unique_id=1138591583 instance=ExtResource("2_player")]
+position = Vector2(320, 540)
+move_speed = 760.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1994914331]
+position = Vector2(960, 540)
+script = ExtResource("4_camera")
+
+[node name="DebugOverlay" type="Node2D" parent="." unique_id=665733124]
+script = ExtResource("5_debug")
+
+[node name="HUD" parent="." unique_id=1700099243 instance=ExtResource("3_hud")]

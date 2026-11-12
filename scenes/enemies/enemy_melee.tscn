@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3]
+
+; 杂兵（近战）。屏幕高约 210px @1080p，原点脚底。
+
+[ext_resource type="Script" path="res://scripts/actors/enemy.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="2_hitbox"]
+[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="3_hurtbox"]
+[ext_resource type="Shader" path="res://assets/shaders/hit_flash.gdshader" id="4_flash"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flash"]
+resource_local_to_scene = true
+shader = ExtResource("4_flash")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
+radius = 62.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(210, 170)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -20)
+shape = SubResource("CircleShape2D_body")
+
+[node name="Body" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_flash")
+color = Color(0.33, 0.39, 0.49, 1)
+polygon = PackedVector2Array(-46, -172, 46, -172, 56, -110, 44, -8, -44, -8, -56, -110)
+
+[node name="Head" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_flash")
+color = Color(0.74, 0.76, 0.8, 1)
+polygon = PackedVector2Array(-22, -200, 18, -206, 32, -186, 24, -162, 0, -156, -20, -164, -28, -184)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+monitorable = true
+script = ExtResource("3_hurtbox")
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -105)
+shape = SubResource("CircleShape2D_hurt")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 64
+monitoring = true
+monitorable = false
+script = ExtResource("2_hitbox")
+attack_team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("RectangleShape2D_attack")

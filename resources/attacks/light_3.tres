@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://cjqfrl1c345jv"]
+
+[ext_resource type="Script" uid="uid://dsgulsmqdqb2v" path="res://scripts/data/attack_data.gd" id="1_attack"]
+[ext_resource type="Script" uid="uid://2snxnkituy18" path="res://scripts/core/hit_data.gd" id="2_hit"]
+
+[sub_resource type="Resource" id="Resource_hit"]
+script = ExtResource("2_hit")
+damage = 24.0
+knockback = 980.0
+hitstop = 0.095
+shake = 0.34
+hit_flash = 0.14
+stun = 0.26
+
+[resource]
+script = ExtResource("1_attack")
+display_name = "轻斩·转"
+windup = 0.16
+active = 0.1
+recovery = 0.34
+cancel_from = 0.3
+hitbox_size = Vector2(330, 220)
+hitbox_offset = Vector2(185, -60)
+step_impulse = 320.0
+hit = SubResource("Resource_hit")

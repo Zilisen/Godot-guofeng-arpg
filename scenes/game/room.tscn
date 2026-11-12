@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3]
+
+; 单屏战斗房间：边界墙 + 出生点 + 右侧门（清怪后开启）。
+
+[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(1760, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(1760, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
+size = Vector2(40, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(60, 320)
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_room")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 60)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(960, 1020)
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(60, 540)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1860, 540)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="SpawnA" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(560, 320)
+
+[node name="SpawnB" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1400, 320)
+
+[node name="SpawnC" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(620, 820)
+
+[node name="SpawnD" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1340, 820)
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(320, 540)
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2(1790, 540)
+collision_layer = 128
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+shape = SubResource("RectangleShape2D_door")
+
+[node name="Fill" type="Polygon2D" parent="Door"]
+color = Color(0.28, 0.28, 0.33, 1)
+polygon = PackedVector2Array(-14, -160, 14, -160, 14, 160, -14, 160)
+
+[node name="Label" type="Label" parent="Door"]
+offset_left = -70.0
+offset_top = -230.0
+offset_right = 70.0
+offset_bottom = -180.0
+theme_override_font_sizes/font_size = 30
+text = "封"
+horizontal_alignment = 1
+vertical_alignment = 1

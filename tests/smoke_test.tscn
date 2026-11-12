@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+; 无头冒烟测试入口：
+;   Godot_v4.7.2-stable_win64_console.exe --headless --path D:\godot-guofeng-arpg res://tests/smoke_test.tscn
+
+[ext_resource type="Script" path="res://tests/smoke_test.gd" id="1_test"]
+
+[node name="SmokeTest" type="Node"]
+script = ExtResource("1_test")

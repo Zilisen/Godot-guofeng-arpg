@@ -1,0 +1,136 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.11, 0.11, 0.13, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.38, 0.28, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.64, 0.18, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RoomLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 48.0
+offset_top = 32.0
+offset_right = 1000.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 32
+text = "第 1 / 3 间"
+
+[node name="EnemyLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1480.0
+offset_top = 32.0
+offset_right = 1872.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 32
+text = "残敌 0"
+horizontal_alignment = 2
+
+[node name="HPBar" type="ProgressBar" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 48.0
+offset_top = 964.0
+offset_right = 548.0
+offset_bottom = 1008.0
+max_value = 100.0
+value = 100.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+
+[node name="HPText" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 566.0
+offset_top = 958.0
+offset_right = 1066.0
+offset_bottom = 1014.0
+theme_override_font_sizes/font_size = 28
+text = "气血 100 / 100"
+
+[node name="HintLabel" type="Label" parent="Root"]
+layout_mode = 0
+offset_left = 1120.0
+offset_top = 958.0
+offset_right = 1872.0
+offset_bottom = 1014.0
+theme_override_font_sizes/font_size = 24
+text = "WASD 移动 · J 普攻 · K 闪避 · L 技能 · F1 调试"
+horizontal_alignment = 2
+
+[node name="BannerLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -520.0
+offset_top = 170.0
+offset_right = 520.0
+offset_bottom = 230.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 38
+text = ""
+horizontal_alignment = 1
+modulate = Color(1, 1, 1, 0)
+
+[node name="CenterLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -200.0
+offset_right = 600.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fade" type="ColorRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.02, 0.03, 1)
+modulate = Color(1, 1, 1, 0)

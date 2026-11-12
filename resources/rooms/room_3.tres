@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/room_data.gd" id="1_room"]
+
+[resource]
+script = ExtResource("1_room")
+display_name = "佛窟"
+enemy_count = 4
+enemy_health = 70.0
+enemy_damage = 12.0
+enemy_speed = 340.0

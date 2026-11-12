@@ -1,0 +1,27 @@
+# 文本类资源统一 LF，避免 Windows/Mac 换行造成的无意义 diff
+* text=auto eol=lf
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.godot text eol=lf
+*.cfg text eol=lf
+*.md text eol=lf
+*.gitignore text eol=lf
+
+# 二进制资源：告诉 git 不要做文本 diff / 换行转换
+*.png binary
+*.jpg binary
+*.webp binary
+*.psd binary
+*.aseprite binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
+*.blend binary
+*.glb binary
+*.skel binary
+*.atlas binary
+*.scn binary
+*.res binary

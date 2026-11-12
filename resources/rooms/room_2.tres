@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/room_data.gd" id="1_room"]
+
+[resource]
+script = ExtResource("1_room")
+display_name = "断桥"
+enemy_count = 3
+enemy_health = 55.0
+enemy_damage = 10.0
+enemy_speed = 320.0
