@@ -269,8 +269,9 @@ func _start_dash() -> void:
 	velocity = facing * dash_speed
 
 
-func _update_dash(delta: float) -> void:
+func _update_dash(_delta: float) -> void:
 	# 匀速略衰减：前段快、尾段收，避免“滑冰”
+	# 这里不按帧时间积分（位移由速度 + 状态计时控制），故形参用 _delta 占位
 	var t := clampf(_state_time / maxf(dash_duration, 0.01), 0.0, 1.0)
 	velocity = facing * dash_speed * lerpf(1.0, 0.55, t)
 	if _state_time >= dash_duration:

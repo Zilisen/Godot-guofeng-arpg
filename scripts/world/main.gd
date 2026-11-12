@@ -11,7 +11,6 @@ const ROOM_SCENE := preload("res://scenes/game/room.tscn")
 @onready var _player: Player = $World/Player
 @onready var _camera: Camera2D = $Camera2D
 @onready var _hud: HUD = $HUD
-@onready var _debug: Node2D = $DebugOverlay
 
 var room_index := 0
 var room: Room = null

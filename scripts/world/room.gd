@@ -70,7 +70,8 @@ func _spawn_enemies() -> void:
 	var count: int = data.enemy_count if data != null else 3
 	for i in count:
 		var marker := points[i % points.size()] as Marker2D
-		var ring := int(i / points.size())
+		# 超过出生点数量时向外围铺开：每多刷一圈，整圈偏移一格
+		var ring := floori(i / float(points.size()))
 		var enemy := ENEMY_SCENE.instantiate() as Enemy
 		enemy.position = marker.position + Vector2(ring * 90.0, ring * 70.0)
 		if data != null:
