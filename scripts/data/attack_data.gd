@@ -11,6 +11,10 @@ extends Resource
 ## 调试面板 / 招式提示里显示的名字
 @export var display_name := "轻斩"
 
+@export_group("动作")
+## 出招时播放的 AnimatedSprite2D 动画名（三段普攻各用不同方向的动作）
+@export var animation: StringName = &"attack"
+
 @export_group("节奏（秒）")
 ## 前摇：按下到判定出现
 @export var windup := 0.08

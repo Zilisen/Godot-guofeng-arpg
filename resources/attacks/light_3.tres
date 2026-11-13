@@ -15,6 +15,7 @@ stun = 0.26
 [resource]
 script = ExtResource("1_attack")
 display_name = "轻斩·转"
+animation = &"thrust"
 windup = 0.16
 active = 0.1
 recovery = 0.34

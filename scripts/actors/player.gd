@@ -55,7 +55,7 @@ const STATE_NAMES := ["待机", "移动", "普攻", "闪避", "技能", "受击"
 @export var skill: AttackData
 @export var skill_cooldown := 3.0
 
-@onready var _body: Polygon2D = $Body
+@onready var _body: AnimatedSprite2D = $Body
 @onready var _weapon_pivot: Node2D = $WeaponPivot
 @onready var _hurtbox: Hurtbox = $Hurtbox
 @onready var _attack_hitbox: Hitbox = $AttackHitbox
@@ -185,6 +185,10 @@ func _start_action(data: AttackData, new_state: State) -> void:
 	_swing_offset = -1.1
 	_attack_hitbox.deactivate()
 
+	# 不同段位用不同方向的动画，连段之间动画名不同，这里显式从头播放
+	if _body:
+		_body.play(data.animation)
+
 	# 出招前冲：只给一点点，太多会变成“按键位移”
 	if data.step_impulse > 0.0:
 		velocity = facing * data.step_impulse
@@ -294,6 +298,23 @@ func _update_invulnerable() -> void:
 
 
 func _update_visual() -> void:
+	# 贴图统一朝右，向左时水平翻转（斜向移动保留上一次朝向，避免抖动）
+	if absf(facing.x) > 0.01:
+		_body.flip_h = facing.x < 0.0
+
+	# 移动播跑步循环，出招播一次挥剑，其余（待机/受击/闪避）回到静立帧
+	var anim := &"idle"
+	if state == State.MOVE:
+		anim = &"run"
+	elif (state == State.ATTACK or state == State.SKILL) and _active_data:
+		anim = _active_data.animation
+	elif state == State.HURT:
+		anim = &"hit"
+	elif state == State.DEAD:
+		anim = &"die"
+	if _body.animation != anim:
+		_body.play(anim)
+
 	# 武器跟随朝向，并在出招期间做一个挥砍弧
 	var target := facing.angle()
 	if state == State.ATTACK or state == State.SKILL:
@@ -341,6 +362,8 @@ func _on_hurt(hit: HitData, source: Node2D, _hitbox: Hitbox) -> void:
 	else:
 		state = State.HURT
 		_state_time = 0.0
+		# 受击可能连续触发，显式从头播放，避免上一段动画停在中途
+		_body.play(&"hit")
 
 
 ## 硬直/死亡时立刻关掉自己的判定盒，避免“死了还在出刀”
@@ -352,10 +375,11 @@ func attack_hitbox_stop() -> void:
 func _die() -> void:
 	state = State.DEAD
 	_hurtbox.set_invulnerable(true)
-	var tw := create_tween()
-	tw.set_parallel(true)
-	tw.tween_property(_body, "modulate:a", 0.25, 0.35)
-	tw.tween_property(_body, "scale", Vector2(1.3, 0.6), 0.35)
+	# 尸体留在原地，由死亡动画自己完成倒地，不再压扁淡出
+	_body.scale = Vector2.ONE
+	_body.modulate = Color.WHITE
+	_body.play(&"die")
+	velocity = Vector2.ZERO
 	died.emit()
 
 

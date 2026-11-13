@@ -1,17 +1,18 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://dqh4r60cvfawj"]
 
-; 玩家场景。占位美术按 docs/美术管线.md 的规格：
-; 屏幕高约 300px @1080p、原点在脚底中心、统一朝右（正式版朝左用翻转）。
+[ext_resource type="Script" uid="uid://dbw66mv0qpwnh" path="res://scripts/actors/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://jpopo1uu5qm4" path="res://scripts/core/hitbox.gd" id="2_hitbox"]
+[ext_resource type="Script" uid="uid://jeg3ejl63lkw" path="res://scripts/core/hurtbox.gd" id="3_hurtbox"]
+[ext_resource type="Shader" uid="uid://h4oooqlg4112" path="res://assets/shaders/hit_flash.gdshader" id="4_flash"]
+[ext_resource type="SpriteFrames" path="res://assets/characters/hero/hero_frames.tres" id="11_frames"]
+[ext_resource type="Resource" uid="uid://lwycacsx2ps0" path="res://resources/attacks/light_1.tres" id="5_light1"]
+[ext_resource type="Resource" uid="uid://dlex5ihdvq2ag" path="res://resources/attacks/light_2.tres" id="6_light2"]
+[ext_resource type="Resource" uid="uid://cjqfrl1c345jv" path="res://resources/attacks/light_3.tres" id="7_light3"]
+[ext_resource type="Resource" uid="uid://dobliityejg28" path="res://resources/attacks/skill_whirl.tres" id="8_skill"]
+[ext_resource type="Script" uid="uid://dsgulsmqdqb2v" path="res://scripts/data/attack_data.gd" id="9_attackdata"]
 
-[ext_resource type="Script" path="res://scripts/actors/player.gd" id="1_player"]
-[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="2_hitbox"]
-[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="3_hurtbox"]
-[ext_resource type="Shader" path="res://assets/shaders/hit_flash.gdshader" id="4_flash"]
-[ext_resource type="Resource" path="res://resources/attacks/light_1.tres" id="5_light1"]
-[ext_resource type="Resource" path="res://resources/attacks/light_2.tres" id="6_light2"]
-[ext_resource type="Resource" path="res://resources/attacks/light_3.tres" id="7_light3"]
-[ext_resource type="Resource" path="res://resources/attacks/skill_whirl.tres" id="8_skill"]
-[ext_resource type="Script" path="res://scripts/data/attack_data.gd" id="9_attackdata"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 46.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_flash"]
 resource_local_to_scene = true
@@ -19,69 +20,49 @@ shader = ExtResource("4_flash")
 shader_parameter/flash_amount = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
-radius = 46.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
 radius = 80.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(280, 190)
+size = Vector2(254.75, 190)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=92140953]
 collision_layer = 2
-collision_mask = 1
 motion_mode = 1
 script = ExtResource("1_player")
 combo = Array[ExtResource("9_attackdata")]([ExtResource("5_light1"), ExtResource("6_light2"), ExtResource("7_light3")])
 skill = ExtResource("8_skill")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139077217]
 position = Vector2(0, -30)
 shape = SubResource("CircleShape2D_body")
 
-[node name="Body" type="Polygon2D" parent="."]
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=910644995]
 material = SubResource("ShaderMaterial_flash")
-color = Color(0.72, 0.22, 0.24, 1)
-polygon = PackedVector2Array(-58, -262, 58, -262, 78, -170, 66, -10, -66, -10, -78, -170)
+sprite_frames = ExtResource("11_frames")
+animation = &"idle"
+autoplay = "idle"
+centered = false
+offset = Vector2(-180, -304)
 
-[node name="Sash" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_flash")
-color = Color(0.86, 0.76, 0.52, 1)
-polygon = PackedVector2Array(-64, -166, 64, -166, 58, -124, -58, -124)
-
-[node name="Head" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_flash")
-color = Color(0.9, 0.83, 0.74, 1)
-polygon = PackedVector2Array(-32, -304, 26, -312, 48, -288, 40, -256, 6, -246, -28, -254, -42, -282)
-
-[node name="WeaponPivot" type="Node2D" parent="."]
+[node name="WeaponPivot" type="Node2D" parent="." unique_id=1588715451]
 position = Vector2(0, -170)
 
-[node name="Blade" type="Polygon2D" parent="WeaponPivot"]
-material = SubResource("ShaderMaterial_flash")
-color = Color(0.85, 0.9, 0.95, 1)
-polygon = PackedVector2Array(40, -12, 250, -4, 268, 0, 250, 4, 40, 12)
-
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=939863278]
 collision_layer = 64
 collision_mask = 0
 monitoring = false
-monitorable = true
 script = ExtResource("3_hurtbox")
-team = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=524503990]
 position = Vector2(0, -140)
 shape = SubResource("CircleShape2D_hurt")
 
-[node name="AttackHitbox" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=605072816]
 collision_layer = 8
 collision_mask = 16
-monitoring = true
 monitorable = false
 script = ExtResource("2_hitbox")
-attack_team = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1662670761]
 shape = SubResource("RectangleShape2D_attack")

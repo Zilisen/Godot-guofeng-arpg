@@ -13,6 +13,7 @@ stun = 0.16
 [resource]
 script = ExtResource("1_attack")
 display_name = "轻斩·承"
+animation = &"sweep"
 windup = 0.06
 cancel_from = 0.17
 hitbox_size = Vector2(300, 200)
